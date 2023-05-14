@@ -1,8 +1,8 @@
 use diesel::{ExpressionMethods, RunQueryDsl};
-use registration_form_rust::{establish_connection, schema::users};
-
+use registration_form_rust::schema::users;
+use registration_form_rust::utils::database_functions::establish_connection;
 fn main() {
-    let connection = &mut establish_connection();
+    let connection = &mut establish_connection().unwrap();
 
     let delete_username = "Mary Roger";
 
