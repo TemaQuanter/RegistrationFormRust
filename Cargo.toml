@@ -12,3 +12,7 @@ diesel = { version = "2.0.4", features = ["postgres"] }
 dotenvy = "0.15.7"
 serde = { version = "1.0.163", features = ["derive"] }
 tokio = { version = "1.28.1", features = ["full"] }
+
+[[bin]]
+name = "registration_form_rust"
+path = "src/main.rs"

@@ -17,8 +17,10 @@ pub struct SignIn {
 /// This function verifies if a user exists in a database.
 pub async fn verify(Form(user): Form<SignIn>) -> Result<Redirect, StatusCode> {
     // Try to establish a connection with the database.
-    let connection =
-        &mut establish_connection().map_err(|_error| StatusCode::INTERNAL_SERVER_ERROR)?;
+    let connection = &mut establish_connection().map_err(|error| {
+        println!("{}", error);
+        StatusCode::INTERNAL_SERVER_ERROR
+    })?;
 
     let result: Vec<User>;
 
@@ -73,7 +75,10 @@ pub async fn verify(Form(user): Form<SignIn>) -> Result<Redirect, StatusCode> {
             .filter(users::columns::phone_number.eq(phone_num.to_string()))
             .filter(users::columns::password.eq(hashed_password))
             .load(connection)
-            .map_err(|_error| StatusCode::INTERNAL_SERVER_ERROR)?;
+            .map_err(|error| {
+                println!("{}", error);
+                StatusCode::INTERNAL_SERVER_ERROR
+            })?;
     } else {
         // It is most likely to be an email.
 
@@ -83,7 +88,10 @@ pub async fn verify(Form(user): Form<SignIn>) -> Result<Redirect, StatusCode> {
             .filter(users::columns::email.eq(user.login))
             .filter(users::columns::password.eq(hashed_password))
             .load(connection)
-            .map_err(|_error| StatusCode::INTERNAL_SERVER_ERROR)?;
+            .map_err(|error| {
+                println!("{}", error);
+                StatusCode::INTERNAL_SERVER_ERROR
+            })?;
     }
 
     // If there are no results, then the user whether does not exist or entered
