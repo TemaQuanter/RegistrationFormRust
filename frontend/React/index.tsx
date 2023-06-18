@@ -80,7 +80,7 @@ export default function Custom_form(props) {
             <input
                 type="text"
                 id="number"
-                name="email"
+                name="number"
                 placeholder="Номер"
                 required
                 style={{
